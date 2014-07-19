@@ -1,0 +1,598 @@
+[Tutorial] Github
+Oleh Fariz Rachman pada 12 Agustus 2012 pukul 10:07
+
+1. Installasi GIT
+
+a. Menggunakan apt-get
+
+fariz@julia:~$ sudo apt-get install git-core git-gui git-doc gitg
+
+b. Konfigursi git global sistem
+
+fariz@julia:~$ git config --global user.name "Full Name"
+
+fariz@julia:~$ git config --global user.email "your_email@youremail.com"
+
+fariz@julia:~$ git config --global color.ui true
+
+NOTE : Git bisa di install di windows, linux dan mac.
+
+ 
+
+ 
+
+2. Daftar Github
+
+Untuk daftar github saya kira sangat mudah seperti kita mendaftar account di internet. Dimana kita harus mengisi formulir, seperti :
+
+Username, email address, dan password.
+
+https://github.com/signup/free
+
+ 
+
+ 
+
+3. Membuat ssh-keygen.
+
+SSH Keygen ini sangat diperlukan untuk mengakses repository karena digunakan untuk keamanan dalam mengakses repository git. Tanpa membuat ssh-keygen kamu tidak bisa menggunakan git pada github.
+
+ 
+
+Cara untuk membuat ssh-keygen:
+
+fariz@julia:~$ ssh-keygen -t rsa -C "your_email@youremail.com"
+
+Generating public/private rsa key pair.
+
+Enter file in which to save the key (/home/fariz/.ssh/id_rsa):
+
+Enter passphrase (empty for no passphrase): leaveblank
+
+ Enter same passphrase again: leaveblank
+
+ Your identification has been saved in /home/fariz/.ssh/id_rsa.
+
+Your public key has been saved in /home/fariz/.ssh/id_rsa.pub.
+
+The key fingerprint is: 14:cb:40:c5:6e:84:fc:fc:47:11:8b:76:b7:b2:79:1d your_email@youremail.com
+
+The key's randomart image is:
+
++--[ RSA 2048]----+
+
+| oo+o .. |
+
+| oooo ... |
+
+| =+ o o.. |
+
+| .=. ... . |
+
+| .S. .. .E |
+
+| . .+ ..|
+
+| .o . .|
+
+| . |
+
+| |
+
++-----------------+
+
+fariz@julia:~$
+
+ 
+
+Setelah itu cek di direktori .ssh
+
+fariz@julia:~$ ls -l .ssh/
+
+total 8
+
+-rw------- 1 fariz fariz 1675 2011-07-25 12:33 id_rsa
+
+-rw-r--r-- 1 fariz fariz 406 2011-07-25 12:33 id_rsa.pub
+
+fariz@julia:~$
+
+ 
+
+terlihat ada file baru id_rsa dan id_rsa.pub.
+
+id_rsa, adalah private key dan id_rsa.pub adalah public key. Keduanya adalah satu pasang. id_rsa.pub adalah file yang akan kita copy paste pada github, sedangkan id_rsa tetap di laptop. Jangan sekali-kali memberikan id_rsa kepada orang lain, karena tindakan tersebut bisa berbahaya.
+
+ 
+
+Setelah public key terbuat, sekarang copy file tersebut ke github.
+
+Caranya : Klik Account Setting > SSH Keys >
+
+Pastekan isi id_rsa kedalam Key. Dan isi title sesuai dengan kemauan kamu.
+
+Selanjutnya klik add key.
+
+ 
+
+ 
+
+4. Membuat Repository
+
+a. Membuat Remote Repository di Github
+
+Untuk membuat repository pertama kali, login ke github, klik New Repository.
+
+Pada form “Create a New Repository” terdapat,
+
+Project Name: Isi dengan nama project
+
+Description (optional): Isi dengan deksripsi project yang sedang Kamu kerjakan
+
+Homepage URL (optional): Url project atau url blog Kamu
+
+Kemudian klik Create Repository.
+
+Kita sudah punya repository di git. Lalu bagaimana cara agar repository digithub bisa kita utak-atik via laptop atau PC dirumah? Ikuti langkah selanjutnya .
+
+ 
+
+b. Membuat Local Repository di Local
+
+Setelah membuat repository di github, selanjutnya adalah membuat repository di local (laptop atau pc). Buat folder sesuai dengan project name yang kita buat diatas. Dan inisialisasi git dengan git init direktori tersebut.
+
+fariz@julia:~$ mkdir learn-git
+
+fariz@julia:~$ cd learn-git
+
+fariz@julia:~/learn-git$ git init
+
+Initialized empty Git repository in /home/fariz/learn-git/.git/
+
+fariz@julia:~/learn-git$
+
+ 
+
+git init: diguanakan untuk mengisialisasi repository git.
+
+Lihat isi direktori sekarang .
+
+fariz@julia:~/learn-git$ ls -al
+
+total 12
+
+drwxr-xr-x 3 fariz fariz 4096 2011-07-25 16:39 .
+
+drwxr-xr-x 70 fariz fariz 4096 2011-07-25 16:39 ..
+
+drwxr-xr-x 7 fariz fariz 4096 2011-07-25 16:39 .git
+
+ 
+
+Terdapat direktori .git yang merupakan file repositoy lokal yang kita miliki. Jangan menghapus file tersebut. Buat file untuk pertama kali. Seperti contoh file README
+
+fariz@julia:~/learn-git$ touch README
+
+fariz@julia:~/learn-git$ git add README
+
+ 
+
+git add: digunakan untuk menambah file ke staging area. Staging area adalah area yang bersisi file yang siap di compit ke repository local.
+
+Bila terdapat file lebih dari satu, kita bisa menambahkan secara rekursif, dengan cara git add <titik>
+
+fariz@julia:~/learn-git$ git add .
+
+ 
+
+Selanjut commit file yang ada di staging area ke repo local.
+
+fariz@julia:~/learn-git$ git commit -m "first commit"
+
+[master (root-commit) c08f765] first commit
+
+0 files changed, 0 insertions(+), 0 deletions(-)
+
+create mode 100644 README
+
+fariz@julia:~/learn-git$
+
+ 
+
+git commit: Dengan git commit , kita akan mengcommit file ke repository local.
+
+-m <message log>: digunakan untuk menambahkan message log pada commit yang kita lakukan
+
+NOTE: Dengan git commit, file akan tersimpan ke local repository. Artinya masih didalam laptop/pc, belum terupload ke github.
+
+ 
+
+Setelah kita commit ke repo local, selanjut nya upload ke repo github agar repo local dan repo remote sinkron. Gunakan git push untuk melakukan hal itu.
+
+fariz@julia:~/learn-git$ git remote add origin git@github.com:parudthz/learn-git.git
+
+ 
+
+git add remote add origin: digunakan untuk menambah  remote server
+
+fariz@julia:~/learn-git$ git push -u origin master
+
+Counting objects: 3, done.
+
+Writing objects: 100% (3/3), 212 bytes, done.
+
+Total 3 (delta 0), reused 0 (delta 0)
+
+To git@github.com:parudthz/learn-git.git * [new branch] master -> master
+
+Branch master set up to track remote branch master from origin.
+
+fariz@julia:~/learn-git$
+
+ 
+
+git push -u origin master : digunakan untuk mengepush (mengupload) branch master.
+
+Sekarang cek repo github kamu. Pasti sudah berubah dengan 1 buah file README didalamnya.
+
+ 
+
+ 
+
+5. Memanage Repository
+
+Step by step yang kita lakukan pada langkah ke 4 , hanya dilakukan 1 kali. Untuk kegunaan sehari-hari kita akan sering menggunakan sintaks-sintaks berikut.
+
+ 
+
+a. clone repository
+
+Clone repository adalah menggandakan (cloning) repository yang ada di remote server seperti github.
+
+fariz@julia:~$ git clone git@github.com:parudthz/learn-git.git
+
+Initialized empty Git repository in /home/fariz/learn-git/.git/
+
+remote: Counting objects: 3, done. remote: Total 3 (delta 0), reused 3 (delta 0)
+
+Receiving objects: 100% (3/3), done.
+
+fariz@julia:~$
+
+Sekarang lihat perubahan yang tejadi, git akan membuat direktori dengan nama seperti yang ada di github.
+
+ 
+
+b. Menambah file dan direktory dan Mengedit File README
+
+Selanjutnya agar lebih paham cara penggunaan git, edit file README yang masih kosong dan tambahkan direktory dan file baru.
+
+fariz@julia:~/learn-git$ nano README
+
+atau
+
+fariz@julia:~/learn-git$ gedit README
+
+ 
+
+edit file README tersebut lalu save.
+
+Jika ingin menambahkan file, lakukan dengan cara copy dan paste file ke direktori learn-git tadi.
+
+ 
+
+c. Melihat Status Perubahan
+
+Karena kita sudah membuat, mengedit file dan direktori baru, maka gunakan git status untuk melihat perubahan yang terjadi.
+
+fariz@julia:~/learn-git$ git status
+
+# On branch master
+
+# Changed but not updated:
+
+# (use "git add ..." to update what will be committed)
+
+# (use "git checkout -- ..." to discard changes in working directory)
+
+#
+
+# modified: README
+
+#
+
+# Untracked files:
+
+# (use "git add ..." to include in what will be committed)
+
+#
+
+# images/ no changes added to commit (use "git add" and/or "git commit -a")
+
+fariz@julia:~/learn-git$
+
+ 
+
+Perhatikan terdapat istilah modified README, yang menandakan telah terjadi perubahan pada file readme. Terus juga terdapat Untracked file, berarti ada direktori atau file baru yang belum di commit.
+
+Untuk itu tambahkan ke staging area secara rekursif dengan cara sebagai berikut:
+
+fariz@julia:~/learn-git$ git add .
+
+Cek kembali status perubahan dengan git status.
+
+fariz@julia:~/learn-git$ git status
+
+# On branch master
+
+# Changes to be committed:
+
+# (use "git reset HEAD ..." to unstage)
+
+#
+
+# modified: README
+
+# new file: images/test.jpg
+
+#
+
+fariz@julia:~/learn-git$
+
+Warna status sudah menjadi hijau, artinya file siap untuk di commit ke repository local.
+
+ 
+
+d. Mengcommit perubahan ke repository local
+
+Setelah file berada di staging area , selanjut nya commit ke repository local.
+
+fariz@julia:~/learn-git$ git commit -m "menambahkan gambar baru dan edit file README"
+
+[master 2de8300] menambahkan gambar baru dan edit file README
+
+2 files changed, 1 insertions(+), 0 deletions(-)
+
+create mode 100755 images/test.jpg
+
+fariz@julia:~/learn-git$
+
+ 
+
+e. Mengupload perubahan ke remote repository
+
+Sekarang repository local sudah berubah, namun di remote repository belum berubah. Agar di remote juga berubah, gunakan langkah selanjutnya.
+
+fariz@julia:~/learn-git$ git push
+
+Counting objects: 7, done.
+
+Delta compression using up to 2 threads.
+
+Compressing objects: 100% (3/3), done.
+
+Writing objects: 100% (5/5), 26.29 KiB, done.
+
+Total 5 (delta 0), reused 0 (delta 0) To git@github.com:parudthz/learn-git.git
+
+03b15b9..2de8300 master -> master
+
+fariz@julia:~/learn-git$
+
+ 
+
+Terahir cek status
+
+fariz@julia:~/learn-git$ git status
+
+# On branch master nothing to commit (working directory clean)
+
+fariz@julia:~/learn-git$
+
+ 
+
+Jika muncul message seperti demikian berarti tidak ada perubahan yang terjadi di repository local kita.
+
+ 
+
+ 
+
+6. Advance Tips and Tricks
+
+Berikut ini adalah tips dan trik tambahan . Tips ini hanya optional untuk Anda yang advance dan sudah mengerti workflow git.
+
+ 
+
+a. Menggunakan git pull
+
+Sintak git pull digunakan untuk menupdate perubahan dari remote repository ke local repository. Sintaks ini sangat bergunakan jika kita bekerja dengan 2 orang programer atau lebih.
+
+fariz@julia:~/learn-git$ git pull
+
+ 
+
+b. Menambah branch
+
+Branch didalam git bisa diibaratkan seperti sebuah area kerja. Jika pada langkah sebelmnya kita secara defaul memiliki branch master, maka kita bisa membuat branch tambahan .Lihat branch yang ada sekarang
+
+fariz@julia:~/learn-git$ git branch -a
+
+* master
+
+remotes/origin/HEAD -> origin/master
+
+remotes/origin/master
+
+fariz@julia:~/learn-git$
+
+ 
+
+Tanda * menunjuk pada branch yang aktit.Buat branc baru dengan cara seperti berikut.
+
+fariz@julia:~/learn-git$ git branch new-version
+
+fariz@julia:~/learn-git$ git branch -a
+
+* master new-version
+
+remotes/origin/HEAD -> origin/master
+
+remotes/origin/master
+
+fariz@julia:~/learn-git$
+
+ 
+
+Masuk ke branch new-vesion
+
+fariz@julia:~/learn-git$ git checkout new-version
+
+Switched to branch 'new-version'
+
+fariz@julia:~/learn-git$
+
+ 
+
+Tambahkan file baru pada new-branch dan commit ke repo local
+
+fariz@julia:~/learn-git$ touch NEW-VERSION
+
+fariz@julia:~/learn-git$ nano NEW-VERSION
+
+fariz@julia:~/learn-git$ more NEW-VERSION
+
+File untuk new version
+
+fariz@julia:~/learn-git$ git commit -m "tambah branch new-version"
+
+[new-version ddc2d06] tambah branch new-version
+
+1 files changed, 1 insertions(+), 0 deletions(-)
+
+create mode 100644 NEW-VERSION
+
+fariz@julia:~/learn-git$
+
+ 
+
+Push branch ke github
+
+fariz@julia:~/learn-git$ git push origin new-version
+
+Counting objects: 4, done.
+
+Delta compression using up to 2 threads.
+
+Compressing objects: 100% (2/2), done.
+
+Writing objects: 100% (3/3), 347 bytes, done.
+
+Total 3 (delta 0), reused 0 (delta 0)
+
+To git@github.com:parudthz/learn-git.git
+
+* [new branch] new-version -> new-version
+
+fariz@julia:~/learn-git$
+
+ 
+
+Sekarang lihat pada github, akan terdapat menu baru para branch.
+
+ 
+
+NOTE: Setiap branch memiliki isi file berbeda. Biasanya branch ini digunakan untuk membuat fitur baru tanpa mengganggu branch master yang sudah siap development. Setelah  pada new-branch dirasa sudah cukup dan tidak ada bug, kita bisa membuat branch master sinkron dengan branc new-branch dengan cara merge.
+
+ 
+
+c. Merge antar branch
+
+Pada langkah sebelumnya kita sudah membuat branch baru. Selanjutnya cara untuk gabungkan branch master dengan new-branch. Caranya adalah sebagai berikut.
+
+ 
+
+checkout dulu ke branch master
+
+fariz@julia:~/learn-git$ git checkout master
+
+Switched to branch 'master'
+
+fariz@julia:~/learn-git$
+
+ 
+
+Merge branch dari master ke new-version
+
+fariz@julia:~/learn-git$ git merge new-version
+
+Updating 2de8300..ddc2d06
+
+Fast-forward
+
+NEW-VERSION | 1 +
+
+1 files changed, 1 insertions(+), 0 deletions(-)
+
+create mode 100644 NEW-VERSION
+
+fariz@julia:~/learn-git$
+
+ 
+
+d. Melihat log dengan gitg
+
+fariz@julia:~/learn-git$ gitg
+
+ 
+
+e. Membuat file .gitignore
+
+Terkadang ada file yang tidak harus di commit ke repo karena beberapa alasan seperti .exe karena file tersebut adalah file hasil compile dan bukan code program. Dengan demikian kita bisa mendisable file .exe agar perubahannya tidak dikenali oleh git.cukup buat file .gitignore pada root repo git.
+
+fariz@julia:~/learn-git$ nano .gitignore
+
+fariz@julia:~/learn-git$ more .gitignore
+
+*.exe
+
+*.class
+
+fariz@julia:~/learn-git$
+
+ 
+
+Langkah terahir add , commit dan push .
+
+fariz@julia:~/learn-git$ git commit -m "add .gitignore"
+
+[master 90b563b] add .gitignore
+
+1 files changed, 2 insertions(+), 0 deletions(-)
+
+create mode 100644 .gitignore
+
+fariz@julia:~/learn-git$ git push
+
+Counting objects: 4, done.
+
+Delta compression using up to 2 threads.
+
+Compressing objects: 100% (2/2), done.
+
+Writing objects: 100% (3/3), 360 bytes, done.
+
+Total 3 (delta 0), reused 0 (delta 0)
+
+To git@github.com:parudthz/learn-git.git
+
+2de8300..90b563b master -> master
+
+fariz@julia:~/learn-git$
+
+ 
+
+Dengan demikian jika terdapat file exe, maka file tersebut tidak akan muncul pada saat kita ketik git status.
+
+ 
+
+Semoga membatu :D
